@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cursor animation</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: #000115;
+            cursor: none;
+        }
+
+        .main {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .main h1 {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 65px;
+        }
+
+        .cursor {
+            z-index: 999;
+            position: fixed;
+            background: #2696E8;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 20px #2696E8, 0 0 60px #2696E8, 0 0 100px #2696E8;
+            transform: translate(-50%, -50%);
+            animation: colors 5s infinite; 
+            display: none;
+        }
+
+        @keyframes colors {
+            0% {
+                filter: hue-rotate(0deg);
+            }
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
+
+        .cursor:before {
+            content: "";
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #2696E8;
+            opacity: 0.2;
+            transform: translate(-30%, -30%);
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor"></div> 
+
+    <section class="main">
+        <h1>Cursor Animation</h1>
+    </section>
+
+    <script type="text/javascript"> <!-- Fixed the attribute name -->
+
+        const cursor = document.querySelector(".cursor"); 
+        var timeout;
+
+        document.addEventListener("mousemove", (e) => {
+            let x = e.pageX;
+            let y = e.pageY;
+
+            cursor.style.top = y + 'px';
+            cursor.style.left = x + 'px';
+            cursor.style.display = 'block'; 
+
+            function mouseStopped() {
+                cursor.style.display = 'none';
+            }
+
+            clearTimeout(timeout);
+            timeout = setTimeout(mouseStopped, 1000);
+        });
+
+        document.addEventListener("mouseout", () => {
+            cursor.style.display = 'none';
+        });
+
+    </script>
+</body>
+</html>
